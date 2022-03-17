@@ -105,7 +105,7 @@ const questions = [
     ]
   },
   {
-    question: 'What is Captai’s America shield made of?',
+    question: 'What is Captain America’s shield made of?',
     answers: [
       { text: 'Adamantium', correct: false },
       { text: 'Vibranium', correct: true },
