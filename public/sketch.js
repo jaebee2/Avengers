@@ -216,59 +216,59 @@ const questions = [
       { text: 'Shuri', correct: false },
       { text: 'Nebula', correct: false },
     ]
-  }
+  },
   {
-    question: 'What is Clint Barton’s superhero name?',
+    question: 'What side of his face is the eye patch that Nick Fury wears?',
     answers: [
-      { text: 'Black Panter', correct: false },
-      { text: 'Hawkeye', correct: false},
-      { text: 'Iorn Man', correct: false },
-      { text: 'Thor', correct: true },
+      { text: 'Left Side', correct: false },
+      
+      { text: 'Right side', correct: true },
+      
     ]
-  }
+  },
   {
-    question: 'What is Clint Barton’s superhero name?',
+    question: ' How many infinity stones are there?',
     answers: [
-      { text: 'Black Panter', correct: false },
-      { text: 'Hawkeye', correct: false},
-      { text: 'Iorn Man', correct: false },
-      { text: 'Thor', correct: true },
+      { text: '5', correct: false },
+      { text: '6', correct: true},
+      { text: '4', correct: false },
+      { text: '2', correct: false },
     ]
-  }
+  },
   {
-    question: 'What is Clint Barton’s superhero name?',
+    question: 'Who took out Tony Stark’s parents?',
     answers: [
-      { text: 'Black Panter', correct: false },
-      { text: 'Hawkeye', correct: false},
-      { text: 'Iorn Man', correct: false },
-      { text: 'Thor', correct: true },
+      { text: 'Winter Soldier', correct: false },
+      { text: 'Thanos', correct: false},
+      { text: 'Loki', correct: false },
+      { text: 'Ultron', correct: true },
     ]
-  }
+  },
   {
-    question: 'What is Clint Barton’s superhero name?',
+    question: ' What is the signature move of Black Panther?',
     answers: [
-      { text: 'Black Panter', correct: false },
-      { text: 'Hawkeye', correct: false},
-      { text: 'Iorn Man', correct: false },
-      { text: 'Thor', correct: true },
+      { text: 'The Panter Punch', correct: true },
+      { text: 'The Panter Strike', correct: false},
+      { text: 'The Vibranium Blast', correct: false },
+      { text: 'The Vibranium Strike', correct: false },
     ]
-  }
+  },
   {
-    question: 'What is Clint Barton’s superhero name?',
+    question: 'In which Avengers movie does Scarlet Witch make her appearance?',
     answers: [
-      { text: 'Black Panter', correct: false },
-      { text: 'Hawkeye', correct: false},
-      { text: 'Iorn Man', correct: false },
-      { text: 'Thor', correct: true },
+      { text: 'Avengers Assemble', correct: false },
+      { text: 'Avengers endgame', correct: false},
+      { text: 'Avengers Age of Ultron', correct: true },
+      { text: 'Avengers Infinity war', correct: false },
     ]
-  }
+  },
   {
-    question: 'What is Clint Barton’s superhero name?',
+    question: ' How many Avengers films are there in total?',
     answers: [
-      { text: 'Black Panter', correct: false },
-      { text: 'Hawkeye', correct: false},
-      { text: 'Iorn Man', correct: false },
-      { text: 'Thor', correct: true },
+      { text: '6', correct: false },
+      { text: '5', correct: false},
+      { text: '4', correct: true },
+      { text: '7', correct: false },
     ]
   }
 ]
