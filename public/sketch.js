@@ -166,5 +166,111 @@ const questions = [
       { text: 'Gods', correct: false },
       { text: 'Frost Giants', correct: true },
     ]
+  },
+  {
+    question: 'Which superhero does Bruce Banner transform into?',
+    answers: [
+      { text: 'The Hulk', correct: true },
+      { text: 'Thor', correct: false},
+      { text: 'Iron man', correct: false },
+      { text: 'Hawkeye', correct: false },
+    ]
+  }, {
+    question: 'Who is Loki’s adoptive brother?',
+    answers: [
+      { text: 'Dark elves', correct: false },
+      { text: 'Frost Gient', correct: false},
+      { text: 'Thor', correct: true },
+      { text: 'Tony Stark', correct: false },
+    ]
+  }, {
+    question: 'What’s the name of the mysterious blue glowing cube that Loki uses as a weapon?',
+    answers: [
+      { text: 'The Orb', correct: false },
+      { text: 'Tesseract', correct: true},
+      { text: 'Space Stone', correct: false },
+      { text: 'The scepter', correct: false },
+    ]
+  }, {
+    question: 'In which city do the Avengers battle the Chitauri?',
+    answers: [
+      { text: 'Asgard', correct: false },
+      { text: 'The galaxy', correct: false},
+      { text: 'New York', correct: true },
+      { text: 'Wakanda', correct: false},
+    ]
+  }, {
+    question: 'What is Clint Barton’s superhero name?',
+    answers: [
+      { text: 'Black Panter', correct: false },
+      { text: 'Hawkeye', correct: false},
+      { text: 'Iorn Man', correct: false },
+      { text: 'Thor', correct: true },
+    ]
+  },
+  {
+    question: 'Who is Carol Danvers?',
+    answers: [
+      { text: 'Thor’s Girlfriend', correct: false },
+      { text: 'Captain Marvel', correct: true},
+      { text: 'Shuri', correct: false },
+      { text: 'Nebula', correct: false },
+    ]
+  }
+  {
+    question: 'What is Clint Barton’s superhero name?',
+    answers: [
+      { text: 'Black Panter', correct: false },
+      { text: 'Hawkeye', correct: false},
+      { text: 'Iorn Man', correct: false },
+      { text: 'Thor', correct: true },
+    ]
+  }
+  {
+    question: 'What is Clint Barton’s superhero name?',
+    answers: [
+      { text: 'Black Panter', correct: false },
+      { text: 'Hawkeye', correct: false},
+      { text: 'Iorn Man', correct: false },
+      { text: 'Thor', correct: true },
+    ]
+  }
+  {
+    question: 'What is Clint Barton’s superhero name?',
+    answers: [
+      { text: 'Black Panter', correct: false },
+      { text: 'Hawkeye', correct: false},
+      { text: 'Iorn Man', correct: false },
+      { text: 'Thor', correct: true },
+    ]
+  }
+  {
+    question: 'What is Clint Barton’s superhero name?',
+    answers: [
+      { text: 'Black Panter', correct: false },
+      { text: 'Hawkeye', correct: false},
+      { text: 'Iorn Man', correct: false },
+      { text: 'Thor', correct: true },
+    ]
+  }
+  {
+    question: 'What is Clint Barton’s superhero name?',
+    answers: [
+      { text: 'Black Panter', correct: false },
+      { text: 'Hawkeye', correct: false},
+      { text: 'Iorn Man', correct: false },
+      { text: 'Thor', correct: true },
+    ]
+  }
+  {
+    question: 'What is Clint Barton’s superhero name?',
+    answers: [
+      { text: 'Black Panter', correct: false },
+      { text: 'Hawkeye', correct: false},
+      { text: 'Iorn Man', correct: false },
+      { text: 'Thor', correct: true },
+    ]
   }
 ]
+
+
