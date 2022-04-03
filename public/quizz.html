@@ -1,21 +1,37 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Awesome Quiz App | CodingNepal</title>
+    <title>Ultimate Avengers Quiz</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <!-- FontAweome CDN Link for Icons -->
+    <!-- FontAweome CDN Link for Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
+
+    <div class="banner">
+    <div class="navbar"> 
+        <img src="logo.png " class="logo" >
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="quizz.html">Quizz</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#">Collections</a></li>
+        </ul>
+    </div>
     <!-- start Quiz button -->
     <div class="start_btn"><button>Start Quiz</button></div>
+
     <!-- Info Box -->
     <div class="info_box">
         <div class="info-title"><span>Some Rules of this Quiz</span></div>
         <div class="info-list">
-            <div class="info">1. You will have only <span>15 seconds</span> per each question.</div>
+            <div class="info">1. You will have only <span>10 seconds</span> per each question.</div>
             <div class="info">2. Once you select your answer, it can't be undone.</div>
             <div class="info">3. You can't select any option once time goes off.</div>
             <div class="info">4. You can't exit from the Quiz while you're playing.</div>
@@ -26,13 +42,14 @@
             <button class="restart">Continue</button>
         </div>
     </div>
+
     <!-- Quiz Box -->
     <div class="quiz_box">
         <header>
-            <div class="title">Awesome Quiz Application</div>
+            <div class="title">The Ultimate Avengers Quiz</div>
             <div class="timer">
                 <div class="time_left_txt">Time Left</div>
-                <div class="timer_sec">15</div>
+                <div class="timer_sec">10</div>
             </div>
             <div class="time_line"></div>
         </header>
@@ -44,32 +61,49 @@
                 <!-- Here I've inserted options from JavaScript -->
             </div>
         </section>
+
         <!-- footer of Quiz Box -->
         <footer>
             <div class="total_que">
                 <!-- Here I've inserted Question Count Number from JavaScript -->
             </div>
-            <button class="next_btn">Next Que</button>
+            <button class="next_btn">Next</button>
         </footer>
     </div>
+
     <!-- Result Box -->
     <div class="result_box">
         <div class="icon">
             <i class="fas fa-crown"></i>
         </div>
         <div class="complete_text">You've completed the Quiz!</div>
-        <div class="score_text">
+        <div id="score_text" class="score_text">
             <!-- Here I've inserted Score Result from JavaScript -->
         </div>
         <div class="buttons">
-            <button class="restart">Replay Quiz</button>
-            <button class="quit">Quit Quiz</button>
+            <button class="restart">Replay quizz</button>
+            <button class="quit">Quit quizz</button>
         </div>
-    </div>
+        <h1>Highy Score</h1>
+    <div><a href="/">enter</a> | <a href="/logs">list</a></div>
+    <p>
+     Score: <div id="score_text" class="score_text">
+      
+    </p>
+    <label for="mood">Enter Username</label>
+    <input id="username" value="Username" />
+    <button id="submit_score">submit</button>
+   
+            
+        
+
     <!-- Inside this JavaScript file I've inserted Questions and Options only -->
     <script src="js/questions.js"></script>
+
     <!-- Inside this JavaScript file I've coded all Quiz Codes -->
     <script src="js/script.js"></script>
+    <script src="highscore.js"></script>
+    
+
 </body>
-</html>
 </html>
