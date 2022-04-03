@@ -1,276 +1,194 @@
-const startButton = document.getElementById('start-btn')
-const nextButton = document.getElementById('next-btn')
-const questionContainerElement = document.getElementById('question-container')
-const questionElement = document.getElementById('question')
-const answerButtonsElement = document.getElementById('answer-buttons')
-
-let shuffledQuestions, currentQuestionIndex
-
-startButton.addEventListener('click', startGame)
-nextButton.addEventListener('click', () => {
-  currentQuestionIndex++
-  setNextQuestion()
-})
-
-function startGame() {
-  startButton.classList.add('hide')
-  shuffledQuestions = questions.sort(() => Math.random() - .5)
-  currentQuestionIndex = 0
-  questionContainerElement.classList.remove('hide')
-  setNextQuestion()
+//selecting all required elements
+const start_btn = document.querySelector(".start_btn button");
+const info_box = document.querySelector(".info_box");
+const exit_btn = info_box.querySelector(".buttons .quit");
+const continue_btn = info_box.querySelector(".buttons .restart");
+const quiz_box = document.querySelector(".quiz_box");
+const result_box = document.querySelector(".result_box");
+const option_list = document.querySelector(".option_list");
+const time_line = document.querySelector("header .time_line");
+const timeText = document.querySelector(".timer .time_left_txt");
+const timeCount = document.querySelector(".timer .timer_sec");
+// if startQuiz button clicked
+start_btn.onclick = ()=>{
+    info_box.classList.add("activeInfo"); //show info box
 }
-
-function setNextQuestion() {
-  resetState()
-  showQuestion(shuffledQuestions[currentQuestionIndex])
+// if exitQuiz button clicked
+exit_btn.onclick = ()=>{
+    info_box.classList.remove("activeInfo"); //hide info box
 }
-
-function showQuestion(question) {
-  questionElement.innerText = question.question
-  question.answers.forEach(answer => {
-    const button = document.createElement('button')
-    button.innerText = answer.text
-    button.classList.add('btn')
-    if (answer.correct) {
-      button.dataset.correct = answer.correct
+// if continueQuiz button clicked
+continue_btn.onclick = ()=>{
+    info_box.classList.remove("activeInfo"); //hide info box
+    quiz_box.classList.add("activeQuiz"); //show quiz box
+    showQuetions(0); //calling showQestions function
+    queCounter(1); //passing 1 parameter to queCounter
+    startTimer(15); //calling startTimer function
+    startTimerLine(0); //calling startTimerLine function
+}
+let timeValue =  15;
+let que_count = 0;
+let que_numb = 1;
+let userScore = 0;
+let counter;
+let counterLine;
+let widthValue = 0;
+const restart_quiz = result_box.querySelector(".buttons .restart");
+const quit_quiz = result_box.querySelector(".buttons .quit");
+// if restartQuiz button clicked
+restart_quiz.onclick = ()=>{
+    quiz_box.classList.add("activeQuiz"); //show quiz box
+    result_box.classList.remove("activeResult"); //hide result box
+    timeValue = 15; 
+    que_count = 0;
+    que_numb = 1;
+    userScore = 0;
+    widthValue = 0;
+    showQuetions(que_count); //calling showQestions function
+    queCounter(que_numb); //passing que_numb value to queCounter
+    clearInterval(counter); //clear counter
+    clearInterval(counterLine); //clear counterLine
+    startTimer(timeValue); //calling startTimer function
+    startTimerLine(widthValue); //calling startTimerLine function
+    timeText.textContent = "Time Left"; //change the text of timeText to Time Left
+    next_btn.classList.remove("show"); //hide the next button
+}
+// if quitQuiz button clicked
+quit_quiz.onclick = ()=>{
+    window.location.reload(); //reload the current window
+}
+const next_btn = document.querySelector("footer .next_btn");
+const bottom_ques_counter = document.querySelector("footer .total_que");
+// if Next Que button clicked
+next_btn.onclick = ()=>{
+    if(que_count < questions.length - 1){ //if question count is less than total question length
+        que_count++; //increment the que_count value
+        que_numb++; //increment the que_numb value
+        showQuetions(que_count); //calling showQestions function
+        queCounter(que_numb); //passing que_numb value to queCounter
+        clearInterval(counter); //clear counter
+        clearInterval(counterLine); //clear counterLine
+        startTimer(timeValue); //calling startTimer function
+        startTimerLine(widthValue); //calling startTimerLine function
+        timeText.textContent = "Time Left"; //change the timeText to Time Left
+        next_btn.classList.remove("show"); //hide the next button
+    }else{
+        clearInterval(counter); //clear counter
+        clearInterval(counterLine); //clear counterLine
+        showResult(); //calling showResult function
     }
-    button.addEventListener('click', selectAnswer)
-    answerButtonsElement.appendChild(button)
-  })
 }
-
-function resetState() {
-  clearStatusClass(document.body)
-  nextButton.classList.add('hide')
-  while (answerButtonsElement.firstChild) {
-    answerButtonsElement.removeChild(answerButtonsElement.firstChild)
-  }
+// getting questions and options from array
+function showQuetions(index){
+    const que_text = document.querySelector(".que_text");
+    //creating a new span and div tag for question and option and passing the value using array index
+    let que_tag = '<span>'+ questions[index].numb + ". " + questions[index].question +'</span>';
+    let option_tag = '<div class="option"><span>'+ questions[index].options[0] +'</span></div>'
+    + '<div class="option"><span>'+ questions[index].options[1] +'</span></div>'
+    + '<div class="option"><span>'+ questions[index].options[2] +'</span></div>'
+    + '<div class="option"><span>'+ questions[index].options[3] +'</span></div>';
+    que_text.innerHTML = que_tag; //adding new span tag inside que_tag
+    option_list.innerHTML = option_tag; //adding new div tag inside option_tag
+    
+    const option = option_list.querySelectorAll(".option");
+    // set onclick attribute to all available options
+    for(i=0; i < option.length; i++){
+        option[i].setAttribute("onclick", "optionSelected(this)");
+    }
 }
-
-function selectAnswer(e) {
-  const selectedButton = e.target
-  const correct = selectedButton.dataset.correct
-  setStatusClass(document.body, correct)
-  Array.from(answerButtonsElement.children).forEach(button => {
-    setStatusClass(button, button.dataset.correct)
-  })
-  if (shuffledQuestions.length > currentQuestionIndex + 1) {
-    nextButton.classList.remove('hide')
-  } else {
-    startButton.innerText = 'Restart'
-    startButton.classList.remove('hide')
-  }
+// creating the new div tags which for icons
+let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
+let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
+//if user clicked on option
+function optionSelected(answer){
+    clearInterval(counter); //clear counter
+    clearInterval(counterLine); //clear counterLine
+    let userAns = answer.textContent; //getting user selected option
+    let correcAns = questions[que_count].answer; //getting correct answer from array
+    const allOptions = option_list.children.length; //getting all option items
+    
+    if(userAns == correcAns){ //if user selected option is equal to array's correct answer
+        userScore += 1; //upgrading score value with 1
+        answer.classList.add("correct"); //adding green color to correct selected option
+        answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option
+        console.log("Correct Answer");
+        console.log("Your correct answers = " + userScore);
+    }else{
+        answer.classList.add("incorrect"); //adding red color to correct selected option
+        answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
+        console.log("Wrong Answer");
+        for(i=0; i < allOptions; i++){
+            if(option_list.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer 
+                option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
+                option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
+                console.log("Auto selected correct answer.");
+            }
+        }
+    }
+    for(i=0; i < allOptions; i++){
+        option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
+    }
+    next_btn.classList.add("show"); //show the next button if user selected any option
 }
-
-function setStatusClass(element, correct) {
-  clearStatusClass(element)
-  if (correct) {
-    element.classList.add('correct')
-  } else {
-    element.classList.add('wrong')
-  }
+function showResult(){
+    info_box.classList.remove("activeInfo"); //hide info box
+    quiz_box.classList.remove("activeQuiz"); //hide quiz box
+    result_box.classList.add("activeResult"); //show result box
+    const scoreText = result_box.querySelector(".score_text");
+    if (userScore > 3){ // if user scored more than 3
+        //creating a new span tag and passing the user score number and total question number
+        let scoreTag = '<span>and congrats! , You got <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
+        scoreText.innerHTML = scoreTag;  //adding new span tag inside score_Text
+    }
+    else if(userScore > 1){ // if user scored more than 1
+        let scoreTag = '<span>and nice , You got <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
+        scoreText.innerHTML = scoreTag;
+    }
+    else{ // if user scored less than 1
+        let scoreTag = '<span>and sorry , You got only <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
+        scoreText.innerHTML = scoreTag;
+    }
 }
-
-function clearStatusClass(element) {
-  element.classList.remove('correct')
-  element.classList.remove('wrong')
+function startTimer(time){
+    counter = setInterval(timer, 1000);
+    function timer(){
+        timeCount.textContent = time; //changing the value of timeCount with time value
+        time--; //decrement the time value
+        if(time < 9){ //if timer is less than 9
+            let addZero = timeCount.textContent; 
+            timeCount.textContent = "0" + addZero; //add a 0 before time value
+        }
+        if(time < 0){ //if timer is less than 0
+            clearInterval(counter); //clear counter
+            timeText.textContent = "Time Off"; //change the time text to time off
+            const allOptions = option_list.children.length; //getting all option items
+            let correcAns = questions[que_count].answer; //getting correct answer from array
+            for(i=0; i < allOptions; i++){
+                if(option_list.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer
+                    option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
+                    option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
+                    console.log("Time Off: Auto selected correct answer.");
+                }
+            }
+            for(i=0; i < allOptions; i++){
+                option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
+            }
+            next_btn.classList.add("show"); //show the next button if user selected any option
+        }
+    }
 }
-
-const questions = [
-  {
-    question: 'What year was the first Iron Man movie released, kicking off the Marvel Cinematic Universe? ',
-    answers: [
-      { text: '2005', correct: false },
-      { text: '2008', correct: true },
-      { text: '2010', correct: false },
-      { text: '2012', correct: false },
-    ]
-  },
-  {
-    question: 'What is the name of Thor’s hammer?',
-    answers: [
-      { text: 'Vanir', correct: false },
-      { text: 'Mjolnier', correct: true },
-      { text: 'Stormbreaker', correct: false },
-      { text: 'Odinsward', correct: false }
-    ]
-  },
-  {
-    question: 'In the Incredible Hulk, what does Tony tell Thaddeus Ross at the end of the film?',
-    answers: [
-      { text: 'That he wants to study The Hulk', correct: false },
-      { text: 'That he knows about S.H.I.E.L.D', correct: false },
-      { text: 'That they are putting a team together', correct: true },
-      { text: 'That Thaddeus owes him money', correct: false }
-    ]
-  },
-  {
-    question: 'What is Captain America’s shield made of?',
-    answers: [
-      { text: 'Adamantium', correct: false },
-      { text: 'Vibranium', correct: true },
-      { text: 'Promethium', correct: false },
-      { text: 'Carbonadium', correct: false },
-    ]
-  },
-  {
-    question: 'The Flerkens are a race of extremely dangerous aliens that resembles what?',
-    answers: [
-      { text: 'Cats', correct: true },
-      { text: 'Ducks', correct: false },
-      { text: 'Reptiles', correct: false },
-      { text: 'Raccoons', correct: false },
-    ]
-  },
-  {
-    question: 'In the first avengers film, what was the name Tony Stark gave to Thor?',
-    answers: [
-      { text: 'God of Thunder', correct: false },
-      { text: 'lightning God', correct: false},
-      { text: 'Asgardian', correct: false },
-      { text: 'Point Break', correct: true },
-    ]
-  },
-  {
-    question: 'What is the real name of the Black Panther?',
-    answers: [
-      { text: '•	N’Jobu', correct: false },
-      { text: 'M’Baku', correct: false},
-      { text: 'N’Jadaka', correct: false },
-      { text: 'T’Challa ', correct: true },
-    ]
-  },
-  {
-    question: 'What is the alien race Loki sends to invade Earth in The Avengers?',
-    answers: [
-      { text: 'The Giants Frost', correct: false },
-      { text: 'The Chitauri', correct: true},
-      { text: 'Asgardians', correct: false },
-      { text: 'The Skrulls ', correct: false },
-    ]
-  },
-  {
-    question: 'Who was the last holder of the Space Stone before Thanos claims it for his Infinity Gauntlet?',
-    answers: [
-      { text: 'Thor', correct: false },
-      { text: 'Loki', correct: true},
-      { text: 'Doctor Strange', correct: false },
-      { text: 'Vision', correct: false },
-    ]
-  },
-  {
-    question: 'What race of beings is loki from?',
-    answers: [
-      { text: 'Dark elves', correct: false },
-      { text: 'Asgardian', correct: false},
-      { text: 'Gods', correct: false },
-      { text: 'Frost Giants', correct: true },
-    ]
-  },
-  {
-    question: 'Which superhero does Bruce Banner transform into?',
-    answers: [
-      { text: 'The Hulk', correct: true },
-      { text: 'Thor', correct: false},
-      { text: 'Iron man', correct: false },
-      { text: 'Hawkeye', correct: false },
-    ]
-  }, {
-    question: 'Who is Loki’s adoptive brother?',
-    answers: [
-      { text: 'Dark elves', correct: false },
-      { text: 'Frost Gient', correct: false},
-      { text: 'Thor', correct: true },
-      { text: 'Tony Stark', correct: false },
-    ]
-  }, {
-    question: 'What’s the name of the mysterious blue glowing cube that Loki uses as a weapon?',
-    answers: [
-      { text: 'The Orb', correct: false },
-      { text: 'Tesseract', correct: true},
-      { text: 'Space Stone', correct: false },
-      { text: 'The scepter', correct: false },
-    ]
-  }, {
-    question: 'In which city do the Avengers battle the Chitauri?',
-    answers: [
-      { text: 'Asgard', correct: false },
-      { text: 'The galaxy', correct: false},
-      { text: 'New York', correct: true },
-      { text: 'Wakanda', correct: false},
-    ]
-  }, {
-    question: 'What is Clint Barton’s superhero name?',
-    answers: [
-      { text: 'Black Panter', correct: false },
-      { text: 'Hawkeye', correct: false},
-      { text: 'Iorn Man', correct: false },
-      { text: 'Thor', correct: true },
-    ]
-  },
-  {
-    question: 'Who is Carol Danvers?',
-    answers: [
-      { text: 'Thor’s Girlfriend', correct: false },
-      { text: 'Captain Marvel', correct: true},
-      { text: 'Shuri', correct: false },
-      { text: 'Nebula', correct: false },
-    ]
-  },
-  {
-    question: 'What side of his face is the eye patch that Nick Fury wears?',
-    answers: [
-      { text: 'Left Side', correct: false },
-      
-      { text: 'Right side', correct: true },
-      
-    ]
-  },
-  {
-    question: ' How many infinity stones are there?',
-    answers: [
-      { text: '5', correct: false },
-      { text: '6', correct: true},
-      { text: '4', correct: false },
-      { text: '2', correct: false },
-    ]
-  },
-  {
-    question: 'Who took out Tony Stark’s parents?',
-    answers: [
-      { text: 'Winter Soldier', correct: false },
-      { text: 'Thanos', correct: false},
-      { text: 'Loki', correct: false },
-      { text: 'Ultron', correct: true },
-    ]
-  },
-  {
-    question: ' What is the signature move of Black Panther?',
-    answers: [
-      { text: 'The Panter Punch', correct: true },
-      { text: 'The Panter Strike', correct: false},
-      { text: 'The Vibranium Blast', correct: false },
-      { text: 'The Vibranium Strike', correct: false },
-    ]
-  },
-  {
-    question: 'In which Avengers movie does Scarlet Witch make her appearance?',
-    answers: [
-      { text: 'Avengers Assemble', correct: false },
-      { text: 'Avengers endgame', correct: false},
-      { text: 'Avengers Age of Ultron', correct: true },
-      { text: 'Avengers Infinity war', correct: false },
-    ]
-  },
-  {
-    question: ' How many Avengers films are there in total?',
-    answers: [
-      { text: '6', correct: false },
-      { text: '5', correct: false},
-      { text: '4', correct: true },
-      { text: '7', correct: false },
-    ]
-  }
-]
-
-
+function startTimerLine(time){
+    counterLine = setInterval(timer, 29);
+    function timer(){
+        time += 1; //upgrading time value with 1
+        time_line.style.width = time + "px"; //increasing width of time_line with px by time value
+        if(time > 549){ //if time value is greater than 549
+            clearInterval(counterLine); //clear counterLine
+        }
+    }
+}
+function queCounter(index){
+    //creating a new span tag and passing the question number and total question
+    let totalQueCounTag = '<span><p>'+ index +'</p> of <p>'+ questions.length +'</p> Questions</span>';
+    bottom_ques_counter.innerHTML = totalQueCounTag;  //adding new span tag inside bottom_ques_counter
+}
