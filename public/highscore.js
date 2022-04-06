@@ -1,14 +1,11 @@
 function setup() {
   noCanvas();
-  const video = createCapture(VIDEO);
-  video.size(160, 120);
-  let lat, lon;
   const button = document.getElementById('submit');
   button.addEventListener('click', async event => {
-    const mood = document.getElementById('mood').value;
-    video.loadPixels();
-    const image64 = video.canvas.toDataURL();
-    const data = { lat, lon, mood, image64 };
+    const mood = document.getElementById('username').value;
+    const score= document.getElementById('score_text').value
+   
+    const data = {  mood, score };
     const options = {
       method: 'POST',
       headers: {
@@ -21,16 +18,4 @@ function setup() {
     console.log(json);
   });
 
-  if ('geolocation' in navigator) {
-    console.log('geolocation available');
-    navigator.geolocation.getCurrentPosition(position => {
-      lat = position.coords.latitude;
-      lon = position.coords.longitude;
-      console.log(lat, lon);
-      document.getElementById('latitude').textContent = lat;
-      document.getElementById('longitude').textContent = lon;
-    });
-  } else {
-    console.log('geolocation not available');
-  }
 }
