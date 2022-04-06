@@ -1,6 +1,7 @@
 function setup() {
   noCanvas();
-  const button = document.getElementById('submit');
+  
+  const button = document.getElementById('submit_score');
   button.addEventListener('click', async event => {
     const mood = document.getElementById('username').value;
     const score= document.getElementById('score_text').value
